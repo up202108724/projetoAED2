@@ -1,6 +1,7 @@
 #include <iostream>
+#include "GestaoAeroporto.h"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    GestaoAeroporto aeroporto= GestaoAeroporto();
     return 0;
 }
