@@ -55,7 +55,6 @@ void GestaoAeroporto::readAirports()  {
 }
 void GestaoAeroporto::readFlights() {
     ifstream in("../docs/flights.csv");
-    vector<string> palavras;
     int i=0;
     string line;
     getline(in,line);
@@ -67,15 +66,13 @@ void GestaoAeroporto::readFlights() {
             getline(iss, substr, ',');
             if (i == 0) {
                 Source = substr;
-                palavras.push_back(Source);
             }
             if (i == 1) {
                 Target= substr;
-                palavras.push_back(Target);
+
             }
             if (i == 2) {
                 Airline = substr;
-                palavras.push_back(Airline);
             }
             i++;
 
