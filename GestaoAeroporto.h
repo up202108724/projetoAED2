@@ -7,7 +7,12 @@
 
 
 class GestaoAeroporto {
+public:
+    GestaoAeroporto();
 
+    void readAirlines();
+    void readAirports();
+    void readFlights();
 };
 
 
