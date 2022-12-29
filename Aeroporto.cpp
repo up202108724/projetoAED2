@@ -13,5 +13,25 @@ Aeroporto::Aeroporto(int code, const string &name, const string &city, const str
     longitude_=longitude;
 
 }
+int Aeoroporto::getCode() const{
+    return code_;
+}
+string Aeoroporto::getName() const{
+    return name_;
+}
+string Aeoroporto::getCity() const{
+    return city_;
+}
+string Aeoroporto::getCountry() const{
+    return country_;
+}
+float Aeoroporto::getLatitude() const{
+    return latitude_;
+}
+float Aeoroporto::getLongitude() const{
+    return longitude_;
+}
+
+
 
 
