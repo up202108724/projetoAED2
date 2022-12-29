@@ -73,6 +73,12 @@ build CMakeFiles/projetoAED2.dir/Aeroportos.cpp.o: CXX_COMPILER__projetoAED2_Deb
   OBJECT_DIR = CMakeFiles/projetoAED2.dir
   OBJECT_FILE_DIR = CMakeFiles/projetoAED2.dir
 
+build CMakeFiles/projetoAED2.dir/Voo.cpp.o: CXX_COMPILER__projetoAED2_Debug /home/andre/Desktop/projetoAED2/Voo.cpp || cmake_object_order_depends_target_projetoAED2
+  DEP_FILE = CMakeFiles/projetoAED2.dir/Voo.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always -std=gnu++17
+  OBJECT_DIR = CMakeFiles/projetoAED2.dir
+  OBJECT_FILE_DIR = CMakeFiles/projetoAED2.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target projetoAED2
@@ -81,7 +87,7 @@ build CMakeFiles/projetoAED2.dir/Aeroportos.cpp.o: CXX_COMPILER__projetoAED2_Deb
 #############################################
 # Link the executable projetoAED2
 
-build projetoAED2: CXX_EXECUTABLE_LINKER__projetoAED2_Debug CMakeFiles/projetoAED2.dir/main.cpp.o CMakeFiles/projetoAED2.dir/GestaoAeroporto.cpp.o CMakeFiles/projetoAED2.dir/CompanhiaAerea.cpp.o CMakeFiles/projetoAED2.dir/Aeroportos.cpp.o
+build projetoAED2: CXX_EXECUTABLE_LINKER__projetoAED2_Debug CMakeFiles/projetoAED2.dir/main.cpp.o CMakeFiles/projetoAED2.dir/GestaoAeroporto.cpp.o CMakeFiles/projetoAED2.dir/CompanhiaAerea.cpp.o CMakeFiles/projetoAED2.dir/Aeroportos.cpp.o CMakeFiles/projetoAED2.dir/Voo.cpp.o
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/projetoAED2.dir
   POST_BUILD = :
