@@ -1,4 +1,5 @@
 #include "GestaoAeroporto.h"
+#include "Aeroportos.h"
 #include <sstream>
 #include <fstream>
 #include <iostream>
@@ -27,6 +28,7 @@ void GestaoAeroporto::readAirlines() {
             if (i == 3) Country= substr;
             i++;
         }
+        CompanhiaAerea companhia= CompanhiaAerea(Code,Name,Callsign,Country);
     i=0;
     }
 }
@@ -49,6 +51,9 @@ void GestaoAeroporto::readAirports()  {
             if (i == 5) Longitude= substr;
             i++;
         }
+        float latitude= stof(Latitude);
+        float longitude= stof(Longitude);
+        Aeroportos novo_aeroporto= Aeroportos(Code,Name,City,Country,latitude,longitude);
         i=0;
     }
 
@@ -64,18 +69,14 @@ void GestaoAeroporto::readFlights() {
         while(iss.good()){
             string substr;
             getline(iss, substr, ',');
-            if (i == 0) {
+            if (i == 0)
                 Source = substr;
-            }
-            if (i == 1) {
+            if (i == 1)
                 Target= substr;
 
-            }
-            if (i == 2) {
+            if (i == 2)
                 Airline = substr;
-            }
             i++;
-
         }
      i=0;
 

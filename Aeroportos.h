@@ -5,9 +5,20 @@
 #ifndef PROJETOAED2_AEROPORTOS_H
 #define PROJETOAED2_AEROPORTOS_H
 
-
+#include <string>
+using namespace std;
 class Aeroportos {
+public:
+    Aeroportos(string codigo, string nome , string cidade, string pais, float latitude, float longitude);
 
+
+private:
+    string codigo_;
+    string nome_;
+    string cidade_;
+    string pais_;
+    float latitude_;
+    float longitude_;
 };
 
 

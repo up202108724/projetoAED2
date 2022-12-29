@@ -6,6 +6,7 @@
 #define PROJETOAED2_COMPANHIAAEREA_H
 
 #include <unordered_set>
+#include <string>
 using namespace std;
 class CompanhiaAerea {
 public:
