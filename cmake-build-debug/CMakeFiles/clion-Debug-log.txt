@@ -1,6 +1,6 @@
-/snap/clion/219/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" -S /home/antonio/Desktop/projetoAED2 -B /home/antonio/Desktop/projetoAED2/cmake-build-debug
--- The C compiler identification is GNU 11.3.0
--- The CXX compiler identification is GNU 11.3.0
+/snap/clion/219/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/snap/clion/219/bin/ninja/linux/ninja -G Ninja -S /home/andre/Desktop/projetoAED2 -B /home/andre/Desktop/projetoAED2/cmake-build-debug
+-- The C compiler identification is GNU 9.4.0
+-- The CXX compiler identification is GNU 9.4.0
 -- Detecting C compiler ABI info
 -- Detecting C compiler ABI info - done
 -- Check for working C compiler: /usr/bin/cc - skipped
@@ -13,4 +13,4 @@
 -- Detecting CXX compile features - done
 -- Configuring done
 -- Generating done
--- Build files have been written to: /home/antonio/Desktop/projetoAED2/cmake-build-debug
+-- Build files have been written to: /home/andre/Desktop/projetoAED2/cmake-build-debug

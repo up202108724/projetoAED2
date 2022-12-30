@@ -14,5 +14,7 @@ Voo::Voo(bool direction) {
 }*/
 
 void Voo::addEdge(string src, string dest, int weight) {
-    if (find(nodes.begin(),nodes.end(),src)==nodes.end())
+    if (find(nodes.begin(),nodes.end(),src)==nodes.end()){
+
+    }
 }
