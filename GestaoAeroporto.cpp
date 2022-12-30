@@ -1,5 +1,5 @@
 #include "GestaoAeroporto.h"
-#include "Aeroportos.h"
+#include "Aeroporto.h"
 #include <sstream>
 #include <fstream>
 #include <iostream>
@@ -53,7 +53,8 @@ void GestaoAeroporto::readAirports()  {
         }
         float latitude= stof(Latitude);
         float longitude= stof(Longitude);
-        Aeroportos novo_aeroporto= Aeroportos(Code,Name,City,Country,latitude,longitude);
+        Aeroporto novo_aeroporto= Aeroporto(Code,Name,City,Country,latitude,longitude);
+        aeroportos.push_back(novo_aeroporto);
         i=0;
     }
 

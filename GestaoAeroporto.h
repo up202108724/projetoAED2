@@ -8,6 +8,9 @@
 
 #include "CompanhiaAerea.h"
 #include <vector>
+#include <set>
+#include <unordered_set>
+#include "Aeroporto.h"
 
 using namespace std;
 class GestaoAeroporto {
@@ -18,6 +21,7 @@ public:
     void readFlights();
 private:
     vector<CompanhiaAerea> companhiasaereas;
+    vector<Aeroporto> aeroportos;
 };
 
 

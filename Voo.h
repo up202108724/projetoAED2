@@ -5,10 +5,10 @@
 #ifndef PROJETOAED2_VOO_H
 #define PROJETOAED2_VOO_H
 
-
 #include <list>
-#include <vector>
-#include "Aeroportos.h"
+#include <algorithm>
+#include <set>
+#include "Aeroporto.h"
 
 class Voo {
 
@@ -25,7 +25,7 @@ class Voo {
     vector<Node> nodes;
 public:
     Voo(bool direction=false);
-    void addEdge(string src, string dest);
+    void addEdge(string src, string dest, int weight);
     void dfs(string v);
 };
 
