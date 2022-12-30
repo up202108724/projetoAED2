@@ -18,6 +18,8 @@ public:
     float getLongitude() const;
     bool operator<(Aeroporto a);
     bool operator==(Aeroporto a);
+    double calculateDistance(Aeroporto &a) const;
+
 
 private:
     string codigo_;
