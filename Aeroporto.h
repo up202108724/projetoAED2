@@ -16,7 +16,10 @@ public:
     string getCountry() const;
     float getLatitude() const;
     float getLongitude() const;
-    double calculateDistance() const;
+
+    double calculateDistance(Aeroporto& a) const;
+
+
     bool operator<(Aeroporto a);
     bool operator==(Aeroporto a);
 

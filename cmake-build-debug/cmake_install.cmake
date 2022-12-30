@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # Install script for directory: /home/antonio/Desktop/projetoAED2
+=======
+# Install script for directory: /home/andre/Desktop/projetoAED2
+>>>>>>> 529e7d8089b8349da4df65d7c23ba8e3af4870c3
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +54,9 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
+<<<<<<< HEAD
 file(WRITE "/home/antonio/Desktop/projetoAED2/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+=======
+file(WRITE "/home/andre/Desktop/projetoAED2/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+>>>>>>> 529e7d8089b8349da4df65d7c23ba8e3af4870c3
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
