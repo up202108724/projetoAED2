@@ -25,6 +25,7 @@ public:
     void readAirports();
     void readFlights();
     void AddAirport(const Aeroporto& a);
+
     vector<Aeroporto> GetAirportsInCountry(const std::string& country) const;
     vector<Aeroporto> GetAirportsInCity(const std::string& country, const std::string& city) const;
     const Aeroporto& GetAirport(const std::string& country, const std::string& city, const std::string& name) const;
