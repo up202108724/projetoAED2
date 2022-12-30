@@ -13,8 +13,8 @@ Voo::Voo(bool direction) {
     nodes.push_back(newnode);
 }*/
 
-void Voo::addEdge(string src, string dest, int weight) {
+/*void Voo::addEdge(string src, string dest, int weight) {
     if (find(nodes.begin(),nodes.end(),src)==nodes.end()){
 
     }
-}
+}*/

@@ -89,12 +89,7 @@ void GestaoAeroporto::readFlights() {
 }
 
 void GestaoAeroporto::AddAirport(const Aeroporto& a) {
-
-    unordered_map<string, Aeroporto> new_map;
-    unordered_map<string, unordered_map< string ,Aeroporto>> aux_map ;
-    new_map.insert({a.getName(), a});
-    aux_map.insert({a.getCity(), new_map});
-    airports_by_country_.insert({a.getCountry(), aux_map});
+    airports_by_country_[a.getCountry()][a.getCity()].insert({a.getName(), a});
 }
 vector<Aeroporto> GestaoAeroporto::GetAirportsInCountry(const string &country) const {
     std::vector<Aeroporto> airports;

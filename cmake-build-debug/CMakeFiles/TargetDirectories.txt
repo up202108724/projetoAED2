@@ -1,3 +1,3 @@
-/home/andre/Desktop/projetoAED2/cmake-build-debug/CMakeFiles/projetoAED2.dir
-/home/andre/Desktop/projetoAED2/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/andre/Desktop/projetoAED2/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/jtoma/Desktop/projetoAED2-master/cmake-build-debug/CMakeFiles/projetoAED2.dir
+C:/Users/jtoma/Desktop/projetoAED2-master/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/jtoma/Desktop/projetoAED2-master/cmake-build-debug/CMakeFiles/rebuild_cache.dir
