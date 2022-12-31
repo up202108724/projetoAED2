@@ -1,7 +1,0 @@
-# ninja log v5
-559	630	1672426181509008033	projetoAED2	e6d2215a5761f7eb
-1	13	1672423589070942196	CMakeFiles/projetoAED2.dir/Voo.cpp.o	163a110a7298647a
-1	438	1672421051373977030	CMakeFiles/projetoAED2.dir/CompanhiaAerea.cpp.o	162c1d99b001667
-1	762	1672426122513033958	CMakeFiles/projetoAED2.dir/GestaoAeroporto.cpp.o	5d616283b10b5a1c
-1	464	1672421051401977031	CMakeFiles/projetoAED2.dir/Aeroporto.cpp.o	d9e42b7b434f0532
-1	559	1672426181437008063	CMakeFiles/projetoAED2.dir/main.cpp.o	62f328760f3fcd0b
