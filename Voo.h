@@ -8,24 +8,28 @@
 #include <list>
 #include <algorithm>
 #include <set>
+#include <iostream>
 #include "Aeroporto.h"
 
 class Voo {
-
     struct Edge{
-        float weight;
-        string dest;
+        double weight;
+        int index;
+        Aeroporto airportDest;
     };
     struct Node{
         list <Edge> destinos;
         bool visited;
-        string sigla;
+        Aeroporto airportSrc;
     };
     bool hasDirection;
     vector<Node> nodes;
 public:
     Voo(bool direction=false);
-    void addEdge(string src, string dest, int weight);
+    int getTagID(const string& tag);
+    void addNode(Aeroporto airport);
+    void addEdge(string tagSrc, string tagDest);
+    void printAllNodes();
     void dfs(string v);
 };
 

@@ -8,9 +8,9 @@
 
 using namespace std;
 GestaoAeroporto::GestaoAeroporto() {
-    readFlights();
     readAirlines();
     readAirports();
+    readFlights();
 }
 void GestaoAeroporto::readAirlines() {
     ifstream in("../docs/airlines.csv");
@@ -29,7 +29,7 @@ void GestaoAeroporto::readAirlines() {
             if (i == 3) Country= substr;
             i++;
         }
-        CompanhiaAerea companhia= CompanhiaAerea(Code,Name,Callsign,Country);
+        CompanhiaAerea companhia = CompanhiaAerea(Code,Name,Callsign,Country);
         i=0;
     }
 }
@@ -55,8 +55,8 @@ void GestaoAeroporto::readAirports()  {
         float latitude= stof(Latitude);
         float longitude= stof(Longitude);
         Aeroporto novo_aeroporto= Aeroporto(Code,Name,City,Country,latitude,longitude);
-        aeroportos.push_back(novo_aeroporto);
         AddAirport(novo_aeroporto);
+        flightGraph.addNode(novo_aeroporto);
         i=0;
     }
 
@@ -75,17 +75,14 @@ void GestaoAeroporto::readFlights() {
             if (i == 0)
                 Source = substr;
             if (i == 1)
-                Target= substr;
-
+                Target = substr;
             if (i == 2)
                 Airline = substr;
             i++;
         }
         i=0;
-
+        //flightGraph.addEdge(Source, Target);
     }
-
-
 }
 
 void GestaoAeroporto::AddAirport(const Aeroporto& a) {
@@ -109,4 +106,8 @@ std::vector<Aeroporto> GestaoAeroporto::GetAirportsInCity(const std::string& cou
 }
 const Aeroporto& GestaoAeroporto::GetAirport(const std::string& country, const std::string& city, const std::string& name) const{
     return airports_by_country_.at(country).at(city).at(name);
+}
+
+Voo GestaoAeroporto::getGraph() {
+    return flightGraph;
 }
