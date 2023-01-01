@@ -15,7 +15,7 @@ int Voo::getTagID(const string& tag){
 }
 
 void Voo::addNode(Aeroporto airport) {
-    Node newnode = {{}, false, airport};
+    Node newnode = {{}, false, static_cast<int>(nodes.size()), airport};
     nodes.push_back(newnode);
 }
 
@@ -23,7 +23,7 @@ void Voo::addEdge(string tagSrc, string tagDest) {
     int srcIndex = getTagID(tagSrc);
     int destIndex = getTagID(tagDest);
     if (srcIndex==-1 or destIndex==-1){
-        cout << "O aeroporto de destino ou de origem não existe.";
+        cout << "O aeroporto de destino ou de origem não existe.\n";
         return;
     }
     double distance = nodes[srcIndex].airportSrc.calculateDistance(nodes[destIndex].airportSrc);
@@ -33,4 +33,12 @@ void Voo::addEdge(string tagSrc, string tagDest) {
 
 void Voo::printAllNodes() {
     for (Node n : nodes) cout << n.airportSrc.getCode() << "\n";
+}
+
+void Voo::dfs(int origin, int dest) {
+    nodes[origin].visited = true;
+    for (auto e : nodes[origin].destinos){
+        int w = e.index;
+        if (!nodes[w].visited) dfs(w);
+    }
 }

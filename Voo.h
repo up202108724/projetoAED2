@@ -20,6 +20,7 @@ class Voo {
     struct Node{
         list <Edge> destinos;
         bool visited;
+        int index;
         Aeroporto airportSrc;
     };
     bool hasDirection;
@@ -30,7 +31,7 @@ public:
     void addNode(Aeroporto airport);
     void addEdge(string tagSrc, string tagDest);
     void printAllNodes();
-    void dfs(string v);
+    void dfs(int origin, int dest);
 };
 
 

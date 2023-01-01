@@ -81,7 +81,7 @@ void GestaoAeroporto::readFlights() {
             i++;
         }
         i=0;
-        //flightGraph.addEdge(Source, Target);
+        flightGraph.addEdge(Source, Target);
     }
 }
 
