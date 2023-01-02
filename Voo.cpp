@@ -7,21 +7,12 @@ Voo::Voo(bool direction) {
     hasDirection=direction;
 }
 
-int Voo::getTagID(const string& tag){
-    for(int k = 0; k<nodes.size(); k++){
-        if (nodes.at(k).airportSrc.getCode()==tag) return k;
-    }
-    return -1;
-}
-
 void Voo::addNode(Aeroporto airport) {
-    Node newnode = {{}, false, static_cast<int>(nodes.size()), airport};
+    Node newnode = {{}, false, airport};
     nodes.push_back(newnode);
 }
 
-void Voo::addEdge(string tagSrc, string tagDest) {
-    int srcIndex = getTagID(tagSrc);
-    int destIndex = getTagID(tagDest);
+void Voo::addEdge(int srcIndex, int destIndex) {
     if (srcIndex==-1 or destIndex==-1){
         cout << "O aeroporto de destino ou de origem não existe.\n";
         return;
@@ -35,10 +26,19 @@ void Voo::printAllNodes() {
     for (Node n : nodes) cout << n.airportSrc.getCode() << "\n";
 }
 
-void Voo::dfs(int origin, int dest) {
-    nodes[origin].visited = true;
-    for (auto e : nodes[origin].destinos){
-        int w = e.index;
-        if (!nodes[w].visited) dfs(w);
+void Voo::printAllDestinations(){
+    for (Node n : nodes){
+        cout << "\t";
+        cout << n.airportSrc.getCode() << "\n";
+        for (Edge e : n.destinos) cout << e.airportDest.getCode() << ",";
+        cout << endl;
     }
+}
+
+vector<Aeroporto> Voo::getAllDestinations(int indexAirport) {
+    vector<Aeroporto> result;
+    for (Edge e : nodes[indexAirport].destinos){
+        result.push_back(e.airportDest);
+    }
+    return result;
 }

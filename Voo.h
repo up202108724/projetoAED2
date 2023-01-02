@@ -6,31 +6,30 @@
 #define PROJETOAED2_VOO_H
 
 #include <list>
-#include <algorithm>
-#include <set>
+#include <vector>
 #include <iostream>
 #include "Aeroporto.h"
 
 class Voo {
     struct Edge{
         double weight;
-        int index;
+        int dest;
         Aeroporto airportDest;
     };
     struct Node{
         list <Edge> destinos;
         bool visited;
-        int index;
         Aeroporto airportSrc;
     };
     bool hasDirection;
     vector<Node> nodes;
 public:
-    Voo(bool direction=false);
-    int getTagID(const string& tag);
+    Voo(bool direction=true);
     void addNode(Aeroporto airport);
-    void addEdge(string tagSrc, string tagDest);
-    void printAllNodes();
+    void addEdge(int srcIndex, int destIndex);
+    void printAllNodes(); // debug
+    void printAllDestinations(); // debug
+    vector<Aeroporto> getAllDestinations(int indexAirport);
     void dfs(int origin, int dest);
 };
 

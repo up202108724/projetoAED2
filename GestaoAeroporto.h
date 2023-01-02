@@ -25,7 +25,9 @@ public:
     void readAirlines();
     void readAirports();
     void readFlights();
-    void AddAirport(const Aeroporto& a);
+    void addAirportGrouped(const Aeroporto& a);
+    void addAirportID(const Aeroporto& a);
+    int getAirportID(const string& airportTag);
     Voo getGraph();
 
     vector<Aeroporto> GetAirportsInCountry(const std::string& country) const;
@@ -34,6 +36,7 @@ public:
 private:
     vector<CompanhiaAerea> companhiasaereas;
     unordered_map<string, unordered_map<string, unordered_map<string, Aeroporto>>> airports_by_country_;
+    unordered_map<string, int> airportIDs;
     Voo flightGraph = Voo(true);
 };
 
