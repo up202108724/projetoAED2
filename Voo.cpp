@@ -12,13 +12,13 @@ void Voo::addNode(Aeroporto airport) {
     nodes.push_back(newnode);
 }
 
-void Voo::addEdge(int srcIndex, int destIndex) {
+void Voo::addEdge(int srcIndex, int destIndex, CompanhiaAerea companhia) {
     if (srcIndex==-1 or destIndex==-1){
         cout << "O aeroporto de destino ou de origem não existe.\n";
         return;
     }
     double distance = nodes[srcIndex].airportSrc.calculateDistance(nodes[destIndex].airportSrc);
-    Edge flight = {distance, destIndex, nodes[destIndex].airportSrc};
+    Edge flight = {distance, destIndex, companhia, nodes[destIndex].airportSrc};
     nodes[srcIndex].destinos.push_back(flight);
 }
 
@@ -35,10 +35,10 @@ void Voo::printAllDestinations(){
     }
 }
 
-vector<Aeroporto> Voo::getAllDestinations(int indexAirport) {
-    vector<Aeroporto> result;
+vector<pair<Aeroporto,CompanhiaAerea>> Voo::getAllDestinations(int indexAirport) {
+    vector<pair<Aeroporto,CompanhiaAerea>> result;
     for (Edge e : nodes[indexAirport].destinos){
-        result.push_back(e.airportDest);
+        result.emplace_back(e.airportDest,e.companhia);
     }
     return result;
 }

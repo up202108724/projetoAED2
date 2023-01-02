@@ -10,3 +10,15 @@ CompanhiaAerea::CompanhiaAerea(string sigla, string nome, string callsign, strin
     callsign_=callsign;
     pais_=pais;
 }
+
+string CompanhiaAerea::getNome() {
+    return nome_;
+}
+
+string CompanhiaAerea::getSigla() {
+    return sigla_;
+}
+
+bool CompanhiaAerea::operator==(CompanhiaAerea ca){
+    return ca.getSigla()==sigla_;
+}

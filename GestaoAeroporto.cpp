@@ -30,6 +30,7 @@ void GestaoAeroporto::readAirlines() {
             i++;
         }
         CompanhiaAerea companhia = CompanhiaAerea(Code,Name,Callsign,Country);
+        companhias.insert({companhia.getSigla(),companhia});
         i=0;
     }
 }
@@ -80,7 +81,7 @@ void GestaoAeroporto::readFlights() {
             i++;
         }
         i=0;
-        flightGraph.addEdge(airportIDs[Source], airportIDs[Target]);
+        flightGraph.addEdge(airportIDs[Source], airportIDs[Target], companhias[Airline]);
     }
 }
 

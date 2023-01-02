@@ -8,12 +8,15 @@
 #include <list>
 #include <vector>
 #include <iostream>
+#include <utility>
 #include "Aeroporto.h"
+#include "CompanhiaAerea.h"
 
 class Voo {
     struct Edge{
         double weight;
         int dest;
+        CompanhiaAerea companhia;
         Aeroporto airportDest;
     };
     struct Node{
@@ -26,10 +29,10 @@ class Voo {
 public:
     Voo(bool direction=true);
     void addNode(Aeroporto airport);
-    void addEdge(int srcIndex, int destIndex);
+    void addEdge(int srcIndex, int destIndex, CompanhiaAerea companhia);
     void printAllNodes(); // debug
     void printAllDestinations(); // debug
-    vector<Aeroporto> getAllDestinations(int indexAirport);
+    vector<pair<Aeroporto,CompanhiaAerea>> getAllDestinations(int indexAirport);
     void dfs(int origin, int dest);
 };
 

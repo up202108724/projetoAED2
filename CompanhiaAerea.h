@@ -11,7 +11,9 @@ using namespace std;
 class CompanhiaAerea {
 public:
     CompanhiaAerea( string sigla, string nome, string callsign, string pais);
-
+    string getSigla();
+    string getNome();
+    bool operator==(CompanhiaAerea ca);
 
 private:
     string sigla_;
