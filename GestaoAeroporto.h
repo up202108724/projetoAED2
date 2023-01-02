@@ -25,8 +25,7 @@ public:
     void readAirlines();
     void readAirports();
     void readFlights();
-    void addAirportGrouped(const Aeroporto& a);
-    void addAirportID(const Aeroporto& a);
+    void addAirport(const Aeroporto& a);
     int getAirportID(const string& airportTag);
     Voo getGraph();
 

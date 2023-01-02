@@ -55,9 +55,7 @@ void GestaoAeroporto::readAirports()  {
         float latitude= stof(Latitude);
         float longitude= stof(Longitude);
         Aeroporto novo_aeroporto= Aeroporto(Code,Name,City,Country,latitude,longitude);
-        addAirportGrouped(novo_aeroporto);
-        addAirportID(novo_aeroporto);
-        flightGraph.addNode(novo_aeroporto);
+        addAirport(novo_aeroporto);
         i=0;
     }
 
@@ -86,12 +84,11 @@ void GestaoAeroporto::readFlights() {
     }
 }
 
-void GestaoAeroporto::addAirportGrouped(const Aeroporto& a) {
+void GestaoAeroporto::addAirport(const Aeroporto& a) {
     airports_by_country_[a.getCountry()][a.getCity()].insert({a.getName(), a});
-}
-
-void GestaoAeroporto::addAirportID(const Aeroporto& a) {
     airportIDs.insert({a.getCode(),airportIDs.size()});
+    if (airportIDs[a.getCode()]==airportIDs.size()-1) flightGraph.addNode(a);
+    else cout << "O aeroporto " << a.getCode() << " já se encontra na base de dados." << endl;
 }
 
 vector<Aeroporto> GestaoAeroporto::GetAirportsInCountry(const string &country) const {

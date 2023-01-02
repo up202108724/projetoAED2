@@ -7,8 +7,9 @@ void getAllDestinations(string originAirport, GestaoAeroporto manager){
     else {
         cout << "O aeroporto " << originAirport << " tem os seguintes destinos: ";
         for (Aeroporto a: result) {
-            cout << a.getCode() <<", ";
+            cout << a.getCode() << ", ";
         }
+        cout << endl;
     }
 }
 
