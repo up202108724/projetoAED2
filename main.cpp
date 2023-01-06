@@ -2,12 +2,12 @@
 #include "GestaoAeroporto.h"
 
 void getAllDestinations(string originAirport, GestaoAeroporto manager){
-    vector<pair<Aeroporto,CompanhiaAerea>> result = manager.getGraph().getAllDestinations(manager.getAirportID(originAirport));
+    vector<pair<Aeroporto,string>> result = manager.getGraph().getAllDestinations(manager.getAirportID(originAirport));
     if (result.empty()) cout << "O aeroporto " << originAirport << " não existe ou não possui voos de destino.\n";
     else {
         cout << "O aeroporto " << originAirport << " tem os seguintes destinos: ";
         for (auto itr = result.begin(); itr!=result.end(); itr++){
-            cout << itr->first.getCode() << " " << itr->second.getSigla();
+            cout << itr->first.getCode() << " operated by " << itr->second << "\n";
             if (itr==result.end()-1) cout << ".\n";
             else cout << ", ";
         }

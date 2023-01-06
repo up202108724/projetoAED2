@@ -16,7 +16,7 @@ class Voo {
     struct Edge{
         double weight;
         int dest;
-        CompanhiaAerea companhia;
+        string companhia;
         Aeroporto airportDest;
     };
     struct Node{
@@ -29,10 +29,10 @@ class Voo {
 public:
     Voo(bool direction=true);
     void addNode(Aeroporto airport);
-    void addEdge(int srcIndex, int destIndex, CompanhiaAerea companhia);
+    void addEdge(int srcIndex, int destIndex, string companhia);
     void printAllNodes(); // debug
     void printAllDestinations(); // debug
-    vector<pair<Aeroporto,CompanhiaAerea>> getAllDestinations(int indexAirport);
+    vector<pair<Aeroporto,string>> getAllDestinations(int indexAirport);
     void dfs(int origin, int dest);
 };
 
