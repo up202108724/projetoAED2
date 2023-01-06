@@ -34,10 +34,40 @@ void option2(GestaoAeroporto manager, string country){
         cout << city << endl;
     }
 }
+void OptionY(GestaoAeroporto manager , string Code){
+    unordered_set<string> newset=manager.getGraph().getPaisesfromAeroporto(manager.getAirportID("OPO"));
+    for( string a : newset){
+        cout << a<< endl;
+    }
 
+}
+void OptionX(GestaoAeroporto manager, string Code){
+    unordered_set<string> newset=manager.getGraph().getCompanhiasAeriasfromAeroporto(manager.getAirportID("OPO"));
+    for( string a : newset){
+        cout << a<< endl;
+    }
+
+}
+void OptionZ(GestaoAeroporto manager, string Code){
+
+    unordered_set<string> something= manager.getGraph().reachablecountriesbynflights(manager.getAirportID("LIS"),1);
+    for(string a : something){
+        cout<< a << endl;
+    }
+}
+void OptionA(GestaoAeroporto manager, string Code){
+
+    unordered_set<string> something= manager.getGraph().reachablecitiesbynflights(manager.getAirportID("LIS"),1);
+    for(string a : something){
+        cout<< a << endl;
+    }
+}
 int main() {
     GestaoAeroporto manager= GestaoAeroporto();
+
+
     vector<vector<int>> c = manager.getGraph().bfs(manager.getAirportID("LIS"),manager.getAirportID("OPO"));
+
     for (vector<int> m : c){
         for(int d : m){
             cout << d << "<-";
@@ -95,5 +125,6 @@ int main() {
 
 
     }
+
     return 0;
 }

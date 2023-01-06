@@ -137,4 +137,6 @@ set<string> GestaoAeroporto::getCountries() const{
     }
     return countries;
 }
-
+unordered_map<string,CompanhiaAerea> GestaoAeroporto::getCompanhias() {
+    return companhias;
+}

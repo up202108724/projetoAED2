@@ -96,3 +96,63 @@ vector<vector<int>> Voo::bfs(int origin, int dest){
 Aeroporto Voo::getAirport(int id) const {
     return nodes.at(id).airportSrc;
 }
+unordered_set<string> Voo::getCompanhiasAeriasfromAeroporto(int indexAirport) {
+    unordered_set<string> CompanhiasAereas;
+
+    for (Edge d: nodes[indexAirport].destinos){
+        CompanhiasAereas.insert(d.companhia);
+    }
+    return CompanhiasAereas;
+}
+unordered_set<string> Voo::getPaisesfromAeroporto(int indexAirport) {
+    unordered_set<string> Paises;
+
+    for (Edge d: nodes[indexAirport].destinos){
+        Paises.insert(d.airportDest.getCountry());
+    }
+    return Paises;
+}
+void Voo::bfs_nvoos(int v){
+    for(int i=0; i<= nodes.size(); i++){
+        nodes[i].visited=false;
+        nodes[i].rootDistance=0;
+    }
+    queue<int> q;
+    q.push(v);
+    nodes[v].rootDistance=0;
+    nodes[v].visited=true;
+    while (!q.empty()){
+        int u= q.front();
+        q.pop();
+        for (Edge e : nodes[u].destinos){
+            int w=e.dest;
+            if (!nodes[w].visited){
+                q.push(w);
+                nodes[w].visited=true;
+                nodes[w].rootDistance=nodes[u].rootDistance+1;
+            }
+        }
+    }
+}
+unordered_set<string> Voo::reachablecountriesbynflights(int v, int arbitrary) {
+
+    unordered_set<string> paises;
+    bfs_nvoos(v);
+    for(int i=0; i <=nodes.size(); i++){
+        if (nodes[i].visited && nodes[i].rootDistance <= arbitrary){
+            paises.insert(nodes[i].airportSrc.getCountry());
+        }
+    }
+    return paises;
+}
+unordered_set<string> Voo::reachablecitiesbynflights(int v, int arbitrary) {
+
+    unordered_set<string> cidades;
+    bfs_nvoos(v);
+    for(int i=1; i <=nodes.size(); i++){
+        if (nodes[i].visited && nodes[i].rootDistance <= arbitrary){
+            cidades.insert(nodes[i].airportSrc.getCity());
+        }
+    }
+    return cidades;
+}

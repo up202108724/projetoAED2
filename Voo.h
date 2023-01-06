@@ -28,6 +28,7 @@ class Voo {
     };
     bool hasDirection;
     vector<Node> nodes;
+
 public:
     Voo(bool direction=true);
     void addNode(Aeroporto airport);
@@ -37,6 +38,11 @@ public:
     Aeroporto getAirport(int id) const;
     vector<pair<Aeroporto,string>> getAllDestinations(int indexAirport);
     vector<vector<int>> bfs(int origin, int dest);
+    unordered_set<string> getPaisesfromAeroporto(int indexAirport);
+    unordered_set<string> getCompanhiasAeriasfromAeroporto(int indexAirport);
+    void bfs_nvoos(int v);
+    unordered_set<string> reachablecitiesbynflights(int v, int arbitrary);
+    unordered_set<string> reachablecountriesbynflights(int v, int arbitrary);
 };
 
 
