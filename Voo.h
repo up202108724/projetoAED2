@@ -20,6 +20,8 @@ class Voo {
     };
     struct Node{
         list <Edge> destinos;
+        int rootDistance;
+        int predecessor;
         bool visited;
         Aeroporto airportSrc;
     };
@@ -32,7 +34,7 @@ public:
     void printAllNodes(); // debug
     void printAllDestinations(); // debug
     vector<pair<Aeroporto,string>> getAllDestinations(int indexAirport);
-    void dfs(int origin, int dest);
+    vector<vector<int>> bfs(int origin, int dest);
 };
 
 

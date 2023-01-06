@@ -18,6 +18,13 @@ void getAllDestinations(string originAirport, GestaoAeroporto manager){
 
 int main() {
     GestaoAeroporto manager= GestaoAeroporto();
+    vector<vector<int>> c = manager.getGraph().bfs(manager.getAirportID("LIS"),manager.getAirportID("OPO"));
+    for (vector<int> m : c){
+        for(int d : m){
+            cout << d << "<-";
+        }
+        cout << endl;
+    }
     vector<Aeroporto> novo_aeroporto= manager.GetAirportsInCity("United Kingdom", "London");
     int option;
     int quit;
