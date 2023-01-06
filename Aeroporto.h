@@ -18,7 +18,7 @@ public:
     float getLongitude() const;
     bool operator<(Aeroporto a);
     bool operator==(Aeroporto a);
-    double calculateDistance(Aeroporto &a) const;
+    double calculateDistance(double x, double y) const;
 
 
 private:

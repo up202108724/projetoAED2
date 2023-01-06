@@ -17,8 +17,7 @@ void Voo::addEdge(int srcIndex, int destIndex, string companhia) {
         cout << "O aeroporto de destino ou de origem não existe.\n";
         return;
     }
-    double distance = nodes[srcIndex].airportSrc.calculateDistance(nodes[destIndex].airportSrc);
-    Edge flight = {distance, destIndex, companhia, nodes[destIndex].airportSrc};
+    Edge flight = { destIndex, companhia, nodes[destIndex].airportSrc};
     nodes[srcIndex].destinos.push_back(flight);
 }
 

@@ -57,6 +57,7 @@ void GestaoAeroporto::readAirports()  {
         float longitude= stof(Longitude);
         Aeroporto novo_aeroporto= Aeroporto(Code,Name,City,Country,latitude,longitude);
         addAirport(novo_aeroporto);
+        airportsbycode.insert({novo_aeroporto.getCode(),novo_aeroporto});
         i=0;
     }
 
@@ -110,6 +111,15 @@ std::vector<Aeroporto> GestaoAeroporto::GetAirportsInCity(const std::string& cou
 }
 const Aeroporto& GestaoAeroporto::GetAirport(const std::string& country, const std::string& city, const std::string& name) const{
     return airports_by_country_.at(country).at(city).at(name);
+}
+vector<Aeroporto> GestaoAeroporto::GetAirportsbyDistanceToPoint(double maxdistance, double x , double y){
+    vector<Aeroporto> aeroportospordistancia;
+    for(auto it : airportsbycode){
+        if (it.second.calculateDistance(x,y)<=maxdistance){
+            aeroportospordistancia.push_back(it.second);
+        }
+    }
+    return aeroportospordistancia;
 }
 
 Voo GestaoAeroporto::getGraph() {

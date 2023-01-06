@@ -34,11 +34,11 @@ bool Aeroporto::operator<(Aeroporto a) {
 bool Aeroporto::operator==(Aeroporto a) {
     return codigo_==a.getCode();
 }
-double Aeroporto::calculateDistance(Aeroporto& a) const{
-    double dLat = (a.getLatitude() - latitude_) * M_PI / 180.0;
-    double dLon = (a.getLongitude() - longitude_) * M_PI / 180.0;
+double Aeroporto::calculateDistance(double x, double y) const{
+    double dLat = (x - latitude_) * M_PI / 180.0;
+    double dLon = (y- longitude_) * M_PI / 180.0;
     double lat1 = (latitude_) * M_PI / 180.0;
-    double lat2 = (a.getLatitude()) * M_PI / 180.0;
+    double lat2 = x * M_PI / 180.0;
     double result = pow(sin(dLat / 2), 2) + pow(sin(dLon / 2), 2) * cos(lat1) * cos(lat2);
     double rad = 6371;
     double c = 2 * asin(sqrt(result));

@@ -69,5 +69,10 @@ int main() {
         cout<< a.getName() << '\n';
     }
     getAllDestinations("PDL", manager);
+    vector<Aeroporto> aeroportos= manager.GetAirportsbyDistanceToPoint(5, 48.725278,2.359444);
+
+    for (Aeroporto e: aeroportos){
+        cout<< e.getName() << endl;
+    }
     return 0;
 }

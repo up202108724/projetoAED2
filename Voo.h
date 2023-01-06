@@ -14,7 +14,6 @@
 
 class Voo {
     struct Edge{
-        double weight;
         int dest;
         string companhia;
         Aeroporto airportDest;
