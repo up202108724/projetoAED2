@@ -2,7 +2,6 @@
 // Created by andre on 29-12-2022.
 //
 
-#include <queue>
 #include "Voo.h"
 Voo::Voo(bool direction) {
     hasDirection=direction;
@@ -92,4 +91,8 @@ vector<vector<int>> Voo::bfs(int origin, int dest){
         }
     }
     return paths;
+}
+
+Aeroporto Voo::getAirport(int id) const {
+    return nodes.at(id).airportSrc;
 }

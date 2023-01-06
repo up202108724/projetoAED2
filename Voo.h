@@ -9,6 +9,7 @@
 #include <vector>
 #include <iostream>
 #include <utility>
+#include <queue>
 #include "Aeroporto.h"
 #include "CompanhiaAerea.h"
 
@@ -33,6 +34,7 @@ public:
     void addEdge(int srcIndex, int destIndex, string companhia);
     void printAllNodes(); // debug
     void printAllDestinations(); // debug
+    Aeroporto getAirport(int id) const;
     vector<pair<Aeroporto,string>> getAllDestinations(int indexAirport);
     vector<vector<int>> bfs(int origin, int dest);
 };
