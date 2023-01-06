@@ -25,6 +25,15 @@ void getAllDestinations(string originAirport, GestaoAeroporto manager){
         cout << endl;
     }
 }
+void option2(GestaoAeroporto manager, string country){
+    set<string> cities;
+    for (Aeroporto a : manager.GetAirportsInCountry(country)) {
+        cities.insert(a.getCity());
+    }
+    for (string city : cities) {
+        cout << city << endl;
+    }
+}
 
 int main() {
     GestaoAeroporto manager= GestaoAeroporto();
@@ -35,6 +44,9 @@ int main() {
         }
         cout << endl;
     }
+    for(string country : manager.getCountries()){
+        cout << country << endl;
+    }
     vector<Aeroporto> novo_aeroporto= manager.GetAirportsInCity("United Kingdom", "London");
     int option;
     int quit;
@@ -44,6 +56,7 @@ int main() {
         cout << "Digite 0 a qualquer momento para fechar o programa" << endl;
         cout << "---------------------------------------------------------" << endl;
         cout << "1 - Ver o melhor trajeto até ao destino" << endl;
+        cout << "2 - Ver todas as cidades de um país com aeroporto" << endl;
         cout << "Selecione uma opção: ";
         selection = inputInt(9);
         if (selection==0) break;
@@ -61,6 +74,25 @@ int main() {
             if (quit==0) break;
 
         }
+        if(selection == 2) {
+            string country;
+            set<string> countries = manager.getCountries();
+            cout << "---------------------------------------------------------" << endl;
+            cout << "Escolha um país: " << endl;
+            while (cin>>country and countries.find(country)== countries.end()) {
+                if (country=="0") break;
+                cout << "Opção inválida!" << endl;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << endl << "Escolha um país: ";
+            }
+            if (country=="0") break;
+            option2(manager, country);
+            cout << endl << "Insira 0 para sair do programa ou 1 para voltar ao menu principal: ";
+            quit = inputInt(1);
+            if (quit==0) break;
+        }
+
 
     }
     return 0;

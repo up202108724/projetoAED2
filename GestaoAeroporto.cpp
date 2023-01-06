@@ -129,3 +129,12 @@ Voo GestaoAeroporto::getGraph() {
 int GestaoAeroporto::getAirportID(const string &airportTag) {
     return airportIDs[airportTag];
 }
+
+set<string> GestaoAeroporto::getCountries() const{
+    set<string> countries;
+    for (const auto &[code, airport]: airportsbycode) {
+        countries.insert(airport.getCountry());
+    }
+    return countries;
+}
+

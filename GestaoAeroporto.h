@@ -33,11 +33,13 @@ public:
     vector<Aeroporto> GetAirportsInCity(const std::string& country, const std::string& city) const;
     const Aeroporto& GetAirport(const std::string& country, const std::string& city, const std::string& name) const;
     vector<Aeroporto> GetAirportsbyDistanceToPoint(double maxdistance, double x , double y);
+    set<string> getCountries() const;
 private:
     unordered_map<string, unordered_map<string, unordered_map<string, Aeroporto>>> airports_by_country_;
     unordered_map<string, int> airportIDs;
     unordered_map<string, CompanhiaAerea> companhias;
     unordered_map<string, Aeroporto> airportsbycode;
+
     Voo flightGraph = Voo(true);
 };
 
