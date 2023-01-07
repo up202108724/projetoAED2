@@ -68,6 +68,26 @@ void getAllDestinations(string originAirport, GestaoAeroporto manager){
         cout << endl;
     }
 }
+void getAllCountryDestinations(string originAirport, GestaoAeroporto manager){
+    vector<pair<Aeroporto,string>> result = manager.getGraph().getAllDestinations(manager.getAirportID(originAirport));
+    unordered_set<string> new_countries;
+    if (result.empty()) cout << "O aeroporto " << originAirport << " não existe ou não possui voos de destino.\n";
+    else {
+        cout << "O aeroporto " << originAirport << " tem os seguintes destinos: ";
+        for (auto itr = result.begin(); itr!=result.end(); itr++){
+            if(new_countries.find(itr->first.getCountry())!=new_countries.end()){
+                continue;
+            }
+            else {
+                cout << itr->first.getCountry() << "\n";
+                new_countries.insert(itr->first.getCountry());
+            }
+            if (itr == result.end() - 1) cout << ".\n";
+            else cout << ", ";
+        }
+        cout << endl;
+    }
+}
 void getAllAirlines(string originAirport, GestaoAeroporto manager){
     vector<pair<Aeroporto,string>> airlines=manager.getGraph().getAllDestinations(manager.getAirportID(originAirport));
     unordered_set<string> new_airlines;
@@ -286,6 +306,12 @@ int main() {
                 airportCode = inputValidString("Escolha um aeroporto: ", manager.getAirportsToCodeMap());
                 if (airportCode=="0") break;
                 getAllAirlines(airportCode, manager);
+            }
+            if (option==3){
+                string airportCode;
+                airportCode = inputValidString("Escolha um aeroporto: ", manager.getAirportsToCodeMap());
+                if (airportCode=="0") break;
+                getAllCountryDestinations(airportCode, manager);
             }
             if (option==4){
 
