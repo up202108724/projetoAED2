@@ -57,17 +57,22 @@ void OptionZ(GestaoAeroporto manager, string Code){
 }
 void OptionA(GestaoAeroporto manager, string Code){
 
-    unordered_set<string> something= manager.getGraph().reachablecitiesbynflights(manager.getAirportID("LIS"),1);
+    unordered_set<string> something= manager.getGraph().reachablecitiesbynflights(manager.getAirportID(Code),1);
     for(string a : something){
         cout<< a << endl;
     }
 }
+void SeeArticulationPoints(GestaoAeroporto manager){
+    manager.getGraph().articulationPoints();
+}
+void SeeConnectedComponents(GestaoAeroporto manager){
+    manager.getGraph().listSCCs();
+    cout<< "Fazendo assim: " <<  manager.getGraph().listSCCs().size() << " componentes conexos";
+}
 int main() {
     GestaoAeroporto manager= GestaoAeroporto();
 
-
     vector<vector<int>> c = manager.getGraph().bfs(manager.getAirportID("LIS"),manager.getAirportID("OPO"));
-
     for (vector<int> m : c){
         for(int d : m){
             cout << d << "<-";
@@ -125,6 +130,6 @@ int main() {
 
 
     }
-
     return 0;
+
 }

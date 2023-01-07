@@ -2,6 +2,7 @@
 // Created by andre on 29-12-2022.
 //
 
+#include <algorithm>
 #include "Voo.h"
 Voo::Voo(bool direction) {
     hasDirection=direction;
@@ -155,4 +156,148 @@ unordered_set<string> Voo::reachablecitiesbynflights(int v, int arbitrary) {
         }
     }
     return cidades;
+}
+int Voo::dfs_scc(int v , stack<int>* node_stack){
+    nodes[v].visited=true;
+    nodes[v].low=v;
+    nodes[v].num=v;
+    nodes[v].in_stack= true;
+    node_stack->push(v);
+
+    int count=0;
+    for (Edge e : nodes[v].destinos){
+        int w=e.dest;
+        if(!nodes[w].visited){
+            count+=dfs_scc(w,node_stack);
+            nodes[v].low=min(nodes[v].low, nodes[w].low);
+        }
+        else if (nodes[w].in_stack){
+            nodes[v].low=min(nodes[v].low, nodes[w].num);
+        }
+    }
+    if (nodes[v].num==nodes[v].low){
+        int curr=0;
+        count++;
+        while (curr!=v){
+            curr=node_stack->top();
+            nodes[curr].in_stack=false;
+            node_stack->pop();
+
+        }
+    }
+    return count;
+
+}
+void Voo::dfs_scc2(int v, stack<int> &st, list<list<int>> &sccs, int &currCount) {
+    nodes[v].visited = true;
+    nodes[v].num = currCount++;
+    int num = nodes[v].num;
+    st.push(v);
+    nodes[v].in_stack = true;
+    nodes[v].low = num;
+
+    for (const Edge& e : nodes[v].destinos) {
+        int w = e.dest;
+        if(!nodes[w].visited) {
+            dfs_scc2(w,st,sccs,currCount);
+            nodes[v].low = min(nodes[v].low, nodes[w].low);
+        }
+        if (nodes[w].in_stack) {
+            nodes[v].low = min(nodes[v].low, nodes[w].num);
+        }
+    }
+
+    if (nodes[v].low == num) {
+        list<int> scc;
+        int w;
+        do {
+            w = st.top();
+            st.pop();
+            nodes[w].in_stack = false;
+            scc.push_front(w);
+        } while (nodes[w].num != num);
+        sccs.push_back(scc);
+    }
+}
+void Voo::dfs_art(int v, stack<int>& node_stack, list<int>& alist, int index){
+    nodes[v].visited=true;
+    nodes[v].low=index;
+    nodes[v].num=index;
+    nodes[v].in_stack=true;
+    index++;
+    int children=0;
+    bool articulation=false;
+    node_stack.push(v);
+
+    for (Edge e : nodes[v].destinos){
+        int w= e.dest;
+        if (!nodes[w].visited){
+            children++;
+            dfs_art(w,node_stack, alist, index);
+            nodes[v].low=min(nodes[w].low,nodes[v].low);
+            if (nodes[w].low >=nodes[v].num){
+                articulation= true;
+            }
+        }
+        else if (nodes[w].in_stack){
+            nodes[v].low=min(nodes[v].low,nodes[w].num);
+        }
+    }
+    nodes[node_stack.top()].in_stack= false;
+    node_stack.pop();
+    if ((nodes[v].num > 0 && articulation) || (nodes[v].num==0 && children>1))
+        alist.push_front(v);
+}
+list<int> Voo::articulationPoints() {
+    vector<string> l;
+    list<int> answer;
+    stack<int> node_stack;
+    for(int i =0; i <nodes.size(); i++){
+        nodes[i].visited=false;
+        nodes[i].in_stack=false;
+        nodes[i].low=0;
+        nodes[i].num=0;
+    }
+    for(int i =0; i <nodes.size(); i++){
+        if(!nodes[i].visited) {
+            dfs_art(i, node_stack, answer, 0);
+        }
+    }
+    answer.sort();
+    for (int i: answer){
+        l.push_back(nodes[i].airportSrc.getName());
+    }
+
+    sort(l.begin(), l.end());
+    for (auto p:l){
+        cout << p << endl;
+    }
+    cout << answer.size();
+
+    return answer;
+
+}
+
+list<list<int>> Voo::listSCCs() {
+    list<list<int>> sccs;
+    stack<int> st;
+    int currCount = 0;
+    int count=1;
+    for (int i = 0; i < nodes.size(); i ++) {
+        nodes[i].visited = false;
+        nodes[i].in_stack = false;
+    }
+
+    for (int i = 0; i < nodes.size(); i++)
+        if(!nodes[i].visited) {
+            dfs_scc2(i,st,sccs,currCount);
+        }
+    for (auto it= sccs.begin(); it!=sccs.end(); it++) {
+        for (int j: *it){
+            cout <<nodes[j].airportSrc.getName() <<" " ;
+        }
+        cout << count << "º componente conexo" << endl;
+        count++;
+    }
+    return sccs;
 }
