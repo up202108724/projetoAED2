@@ -94,25 +94,6 @@ vector<vector<int>> Voo::bfs(int origin, int dest){
     return paths;
 }
 
-Aeroporto Voo::getAirport(int id) const {
-    return nodes.at(id).airportSrc;
-}
-unordered_set<string> Voo::getCompanhiasAeriasfromAeroporto(int indexAirport) {
-    unordered_set<string> CompanhiasAereas;
-
-    for (Edge d: nodes[indexAirport].destinos){
-        CompanhiasAereas.insert(d.companhia);
-    }
-    return CompanhiasAereas;
-}
-unordered_set<string> Voo::getPaisesfromAeroporto(int indexAirport) {
-    unordered_set<string> Paises;
-
-    for (Edge d: nodes[indexAirport].destinos){
-        Paises.insert(d.airportDest.getCountry());
-    }
-    return Paises;
-}
 int Voo::bfs_nvoos(int v){
     int maxdistance=0;
     for(int i=0; i<= nodes.size(); i++){
@@ -140,8 +121,8 @@ int Voo::bfs_nvoos(int v){
     }
     return maxdistance;
 }
-unordered_set<string> Voo::reachablecountriesbynflights(int v, int arbitrary) {
 
+unordered_set<string> Voo::nFlightsCountries(int v, int arbitrary) {
     unordered_set<string> paises;
     bfs_nvoos(v);
     for(int i=0; i <=nodes.size(); i++){
@@ -151,8 +132,7 @@ unordered_set<string> Voo::reachablecountriesbynflights(int v, int arbitrary) {
     }
     return paises;
 }
-unordered_set<string> Voo::reachablecitiesbynflights(int v, int arbitrary) {
-
+unordered_set<string> Voo::nFlightsCities(int v, int arbitrary) {
     unordered_set<string> cidades;
     bfs_nvoos(v);
     for(int i=1; i <=nodes.size(); i++){
@@ -162,7 +142,7 @@ unordered_set<string> Voo::reachablecitiesbynflights(int v, int arbitrary) {
     }
     return cidades;
 }
-unordered_set<string> Voo::reachableairportsbynflights(int v, int arbitrary) {
+unordered_set<string> Voo::nFlightsAirports(int v, int arbitrary) {
     unordered_set<string> aeroportos;
     bfs_nvoos(v);
     for(int i=0; i <=nodes.size(); i++){
@@ -233,6 +213,7 @@ void Voo::dfs_art(int v, stack<int>& node_stack, list<int>& alist, int index){
     if ((nodes[v].num > 0 && articulation) || (nodes[v].num==0 && children>1))
         alist.push_front(v);
 }
+
 list<int> Voo::articulationPoints() {
     vector<string> l;
     list<int> answer;
@@ -251,12 +232,11 @@ list<int> Voo::articulationPoints() {
     for (int i: answer){
         l.push_back(nodes[i].airportSrc.getName());
     }
-
     sort(l.begin(), l.end());
     for (auto p:l){
-        cout << p << endl;
+        cout << "\t" << p << endl;
     }
-    cout<< "Existem assim " << answer.size() << " pontos de articulação ao longo da rede." << endl ;
+    cout<< "Existem " << answer.size() << " pontos de articulação na rede." << endl ;
     cout << "\n";
     return answer;
 
@@ -271,19 +251,17 @@ list<list<int>> Voo::listSCCs() {
         nodes[i].visited = false;
         nodes[i].in_stack = false;
     }
-
     for (int i = 0; i < nodes.size(); i++)
         if(!nodes[i].visited) {
             dfs_scc2(i,st,sccs,currCount);
         }
     for (auto it= sccs.begin(); it!=sccs.end(); it++) {
         count++;
-        cout << count << "º componente conexo" << endl;
+        cout << count << "º componente fortemente conexo:" << endl;
         for (int j: *it){
-            cout <<nodes[j].airportSrc.getName() <<" ";
+            cout << "\t" << nodes.at(j).airportSrc.getCode() << ", " << nodes[j].airportSrc.getName() << " ";
         }
         cout << endl;
-
     }
     return sccs;
 }
@@ -346,7 +324,7 @@ vector<vector<int>> Voo::bfs_airlines(int origin, int dest, const vector<string>
 int Voo::getDiameter(){
     int diameter=0;
     for(int i=0; i < nodes.size(); i++ ){
-        int curr= bfs_nvoos(i);
+        int curr=bfs_nvoos(i);
         if (diameter< curr){
             diameter=curr;
         }

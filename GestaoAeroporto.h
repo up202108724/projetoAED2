@@ -32,8 +32,6 @@ public:
     vector<Aeroporto> getAirportsInCity(const std::string& country, const std::string& city) const;
     const Aeroporto& getAirport(const std::string& country, const std::string& city, const std::string& name) const;
     vector<Aeroporto> getAirportsbyDistanceToPoint(double maxdistance, double x , double y);
-    set<string> getCountries() const;
-    Aeroporto getAirportByCode(const string& code);
     unordered_map<string, unordered_map<string, unordered_map<string, Aeroporto>>> getAirportsToCountryMap();
     unordered_map<string,CompanhiaAerea> getCompanhias();
     unordered_map<string,Aeroporto> getAirportsToCodeMap();

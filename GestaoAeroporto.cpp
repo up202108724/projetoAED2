@@ -110,9 +110,11 @@ std::vector<Aeroporto> GestaoAeroporto::getAirportsInCity(const std::string& cou
     }
     return airports;
 }
+
 const Aeroporto& GestaoAeroporto::getAirport(const std::string& country, const std::string& city, const std::string& name) const{
     return airportsByCountry.at(country).at(city).at(name);
 }
+
 vector<Aeroporto> GestaoAeroporto::getAirportsbyDistanceToPoint(double maxdistance, double x , double y){
     vector<Aeroporto> aeroportospordistancia;
     for(auto it : airportsByCode){
@@ -132,18 +134,6 @@ int GestaoAeroporto::getAirportID(const string &airportTag) {
     else return -1;
 }
 
-Aeroporto GestaoAeroporto::getAirportByCode(const string& code){
-    if (airportsByCode.find(code)!=airportsByCode.end()) return airportsByCode.at(code);
-    else return {"Invalid", "Invalid", "Invalid", "Invalid", 0, 0};
-}
-
-set<string> GestaoAeroporto::getCountries() const{
-    set<string> countries;
-    for (const auto &[code, airport]: airportsByCode) {
-        countries.insert(airport.getCountry());
-    }
-    return countries;
-}
 unordered_map<string,CompanhiaAerea> GestaoAeroporto::getCompanhias() {
     return companhias;
 }
