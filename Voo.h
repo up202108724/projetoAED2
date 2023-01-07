@@ -43,6 +43,7 @@ public:
     Aeroporto getAirport(int id) const;
     vector<pair<Aeroporto,string>> getAllDestinations(int indexAirport);
     vector<vector<int>> bfs(int origin, int dest);
+    vector<vector<int>> bfs_airlines(int origin, int dest,const vector<string>& airlines);
     unordered_set<string> getPaisesfromAeroporto(int indexAirport);
     unordered_set<string> getCompanhiasAeriasfromAeroporto(int indexAirport);
     void bfs_nvoos(int v);

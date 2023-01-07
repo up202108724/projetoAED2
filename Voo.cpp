@@ -305,3 +305,55 @@ list<list<int>> Voo::listSCCs() {
 Aeroporto Voo::getAirportFromID(int id) {
     return nodes.at(id).airportSrc;
 }
+
+vector<vector<int>> Voo::bfs_airlines(int origin, int dest, const vector<string> &airlines) {
+    if (origin==dest){
+        nodes.at(origin).rootDistance=0;
+        return {};
+    }
+    for(Node n : nodes){
+        n.visited=false;
+        n.predecessor=-1;
+        n.rootDistance=-1;
+    }
+    queue<int> q;
+    q.push(origin);
+    nodes.at(origin).visited=true;
+    nodes.at(origin).rootDistance=0;
+    vector<vector<int>> paths;
+    int max = INT32_MAX;
+    while(!q.empty()) {
+        int u = q.front();
+        q.pop();
+        if (nodes.at(u).rootDistance+1<=max) {
+            for (auto e: nodes[u].destinos) {
+                if (find(airlines.begin(), airlines.end(), e.companhia) == airlines.end()) continue;
+                int w = e.dest;
+                if (w == dest) {
+                    if (nodes.at(dest).rootDistance == -1) {
+                        nodes.at(dest).rootDistance = nodes.at(u).rootDistance + 1;
+                        nodes.at(dest).predecessor = u;
+                        max = nodes.at(dest).rootDistance;
+                    }
+                    vector<int> path = {w};
+                    int temp =u;
+                    while (nodes.at(temp).predecessor != -1) {
+                        path.push_back(temp);
+                        temp = nodes.at(temp).predecessor;
+                    }
+                    path.push_back(temp);
+                    paths.push_back(path);
+                    continue;
+                }
+                if (!nodes.at(w).visited) {
+                    nodes.at(w).visited = true;
+                    nodes.at(w).rootDistance = nodes.at(u).rootDistance + 1;
+                    nodes.at(w).predecessor = u;
+                    q.push(w);
+                }
+            }
+
+        }
+    }
+    return paths;
+}
