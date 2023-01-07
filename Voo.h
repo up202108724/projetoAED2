@@ -46,17 +46,18 @@ public:
     vector<vector<int>> bfs_airlines(int origin, int dest,const vector<string>& airlines);
     unordered_set<string> getPaisesfromAeroporto(int indexAirport);
     unordered_set<string> getCompanhiasAeriasfromAeroporto(int indexAirport);
-    void bfs_nvoos(int v);
+    int bfs_nvoos(int v);
     vector<Node> getNodes(){return nodes;};
     unordered_set<string> reachablecitiesbynflights(int v, int arbitrary);
     unordered_set<string> reachablecountriesbynflights(int v, int arbitrary);
+    unordered_set<string> reachableairportsbynflights(int v, int arbitrary);
     void dfs_art(int v, stack<int>& node_stack, list<int>& alist, int index);
     list<int> articulationPoints();
-    int dfs_scc(int v , stack<int>* node_stack);
     int countSCCs();
     void dfs_scc2(int v, stack<int> &st, list<list<int>> &sccs, int &currCount);
     list<list<int>> listSCCs();
     Aeroporto getAirportFromID(int id);
+    int getDiameter();
 };
 
 

@@ -113,7 +113,8 @@ unordered_set<string> Voo::getPaisesfromAeroporto(int indexAirport) {
     }
     return Paises;
 }
-void Voo::bfs_nvoos(int v){
+int Voo::bfs_nvoos(int v){
+    int maxdistance=0;
     for(int i=0; i<= nodes.size(); i++){
         nodes[i].visited=false;
         nodes[i].rootDistance=0;
@@ -131,16 +132,20 @@ void Voo::bfs_nvoos(int v){
                 q.push(w);
                 nodes[w].visited=true;
                 nodes[w].rootDistance=nodes[u].rootDistance+1;
+                if (nodes[w].rootDistance>maxdistance){
+                    maxdistance=nodes[w].rootDistance;
+                }
             }
         }
     }
+    return maxdistance;
 }
 unordered_set<string> Voo::reachablecountriesbynflights(int v, int arbitrary) {
 
     unordered_set<string> paises;
     bfs_nvoos(v);
     for(int i=0; i <=nodes.size(); i++){
-        if (nodes[i].visited && nodes[i].rootDistance <= arbitrary){
+        if (nodes[i].visited && nodes[i].rootDistance <= arbitrary && nodes[i].rootDistance>0 ){
             paises.insert(nodes[i].airportSrc.getCountry());
         }
     }
@@ -151,43 +156,23 @@ unordered_set<string> Voo::reachablecitiesbynflights(int v, int arbitrary) {
     unordered_set<string> cidades;
     bfs_nvoos(v);
     for(int i=1; i <=nodes.size(); i++){
-        if (nodes[i].visited && nodes[i].rootDistance <= arbitrary){
+        if (nodes[i].visited && nodes[i].rootDistance <= arbitrary && nodes[i].rootDistance>0 ){
             cidades.insert(nodes[i].airportSrc.getCity());
         }
     }
     return cidades;
 }
-int Voo::dfs_scc(int v , stack<int>* node_stack){
-    nodes[v].visited=true;
-    nodes[v].low=v;
-    nodes[v].num=v;
-    nodes[v].in_stack= true;
-    node_stack->push(v);
-
-    int count=0;
-    for (Edge e : nodes[v].destinos){
-        int w=e.dest;
-        if(!nodes[w].visited){
-            count+=dfs_scc(w,node_stack);
-            nodes[v].low=min(nodes[v].low, nodes[w].low);
-        }
-        else if (nodes[w].in_stack){
-            nodes[v].low=min(nodes[v].low, nodes[w].num);
+unordered_set<string> Voo::reachableairportsbynflights(int v, int arbitrary) {
+    unordered_set<string> aeroportos;
+    bfs_nvoos(v);
+    for(int i=0; i <=nodes.size(); i++){
+        if (nodes[i].visited && nodes[i].rootDistance <= arbitrary && nodes[i].rootDistance >0 ){
+            aeroportos.insert(nodes[i].airportSrc.getName());
         }
     }
-    if (nodes[v].num==nodes[v].low){
-        int curr=0;
-        count++;
-        while (curr!=v){
-            curr=node_stack->top();
-            nodes[curr].in_stack=false;
-            node_stack->pop();
-
-        }
-    }
-    return count;
-
+    return aeroportos;
 }
+
 void Voo::dfs_scc2(int v, stack<int> &st, list<list<int>> &sccs, int &currCount) {
     nodes[v].visited = true;
     nodes[v].num = currCount++;
@@ -263,7 +248,6 @@ list<int> Voo::articulationPoints() {
             dfs_art(i, node_stack, answer, 0);
         }
     }
-    answer.sort();
     for (int i: answer){
         l.push_back(nodes[i].airportSrc.getName());
     }
@@ -272,8 +256,8 @@ list<int> Voo::articulationPoints() {
     for (auto p:l){
         cout << p << endl;
     }
-    cout << answer.size();
-
+    cout<< "Existem assim " << answer.size() << " pontos de articulação ao longo da rede." << endl ;
+    cout << "\n";
     return answer;
 
 }
@@ -293,11 +277,13 @@ list<list<int>> Voo::listSCCs() {
             dfs_scc2(i,st,sccs,currCount);
         }
     for (auto it= sccs.begin(); it!=sccs.end(); it++) {
-        for (int j: *it){
-            cout <<nodes[j].airportSrc.getName() <<" " ;
-        }
-        cout << count << "º componente conexo" << endl;
         count++;
+        cout << count << "º componente conexo" << endl;
+        for (int j: *it){
+            cout <<nodes[j].airportSrc.getName() <<" ";
+        }
+        cout << endl;
+
     }
     return sccs;
 }
@@ -356,4 +342,14 @@ vector<vector<int>> Voo::bfs_airlines(int origin, int dest, const vector<string>
         }
     }
     return paths;
+}
+int Voo::getDiameter(){
+    int diameter=0;
+    for(int i=0; i < nodes.size(); i++ ){
+        int curr= bfs_nvoos(i);
+        if (diameter< curr){
+            diameter=curr;
+        }
+    }
+    return diameter;
 }
