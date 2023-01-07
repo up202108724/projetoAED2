@@ -301,3 +301,7 @@ list<list<int>> Voo::listSCCs() {
     }
     return sccs;
 }
+
+Aeroporto Voo::getAirportFromID(int id) {
+    return nodes.at(id).airportSrc;
+}

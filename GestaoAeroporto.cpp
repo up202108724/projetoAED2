@@ -57,7 +57,7 @@ void GestaoAeroporto::readAirports()  {
         float longitude= stof(Longitude);
         Aeroporto novo_aeroporto= Aeroporto(Code,Name,City,Country,latitude,longitude);
         addAirport(novo_aeroporto);
-        airportsbycode.insert({novo_aeroporto.getCode(),novo_aeroporto});
+        airportsByCode.insert({novo_aeroporto.getCode(),novo_aeroporto});
         i=0;
     }
 
@@ -82,39 +82,39 @@ void GestaoAeroporto::readFlights() {
             i++;
         }
         i=0;
-        flightGraph.addEdge(airportIDs[Source], airportIDs[Target], Airline);
+        flightGraph.addEdge(airportIDs.at(Source), airportIDs.at(Target), Airline);
     }
 }
 
 void GestaoAeroporto::addAirport(const Aeroporto& a) {
-    airports_by_country_[a.getCountry()][a.getCity()].insert({a.getName(), a});
+    airportsByCountry[a.getCountry()][a.getCity()].insert({a.getName(), a});
     airportIDs.insert({a.getCode(),airportIDs.size()});
-    if (airportIDs[a.getCode()]==airportIDs.size()-1) flightGraph.addNode(a);
+    if (airportIDs.at(a.getCode())==airportIDs.size()-1) flightGraph.addNode(a);
     else cout << "O aeroporto " << a.getCode() << " já se encontra na base de dados." << endl;
 }
 
-vector<Aeroporto> GestaoAeroporto::GetAirportsInCountry(const string &country) const {
+vector<Aeroporto> GestaoAeroporto::getAirportsInCountry(const string &country) const {
     std::vector<Aeroporto> airports;
-    for (const auto& city : airports_by_country_.at(country)) {
+    for (const auto& city : airportsByCountry.at(country)) {
         for (const auto& airport : city.second) {
             airports.push_back(airport.second);
         }
     }
     return airports;
 }
-std::vector<Aeroporto> GestaoAeroporto::GetAirportsInCity(const std::string& country, const std::string& city) const {
+std::vector<Aeroporto> GestaoAeroporto::getAirportsInCity(const std::string& country, const std::string& city) const {
     std::vector<Aeroporto> airports;
-    for (const auto& airport : airports_by_country_.at(country).at(city)) {
+    for (const auto& airport : airportsByCountry.at(country).at(city)) {
         airports.push_back(airport.second);
     }
     return airports;
 }
-const Aeroporto& GestaoAeroporto::GetAirport(const std::string& country, const std::string& city, const std::string& name) const{
-    return airports_by_country_.at(country).at(city).at(name);
+const Aeroporto& GestaoAeroporto::getAirport(const std::string& country, const std::string& city, const std::string& name) const{
+    return airportsByCountry.at(country).at(city).at(name);
 }
-vector<Aeroporto> GestaoAeroporto::GetAirportsbyDistanceToPoint(double maxdistance, double x , double y){
+vector<Aeroporto> GestaoAeroporto::getAirportsbyDistanceToPoint(double maxdistance, double x , double y){
     vector<Aeroporto> aeroportospordistancia;
-    for(auto it : airportsbycode){
+    for(auto it : airportsByCode){
         if (it.second.calculateDistance(x,y)<=maxdistance){
             aeroportospordistancia.push_back(it.second);
         }
@@ -127,16 +127,30 @@ Voo GestaoAeroporto::getGraph() {
 }
 
 int GestaoAeroporto::getAirportID(const string &airportTag) {
-    return airportIDs[airportTag];
+    if (airportIDs.find(airportTag)!=airportIDs.end()) return airportIDs.at(airportTag);
+    else return -1;
+}
+
+Aeroporto GestaoAeroporto::getAirportByCode(const string& code){
+    if (airportsByCode.find(code)!=airportsByCode.end()) return airportsByCode.at(code);
+    else return {"Invalid", "Invalid", "Invalid", "Invalid", 0, 0};
 }
 
 set<string> GestaoAeroporto::getCountries() const{
     set<string> countries;
-    for (const auto &[code, airport]: airportsbycode) {
+    for (const auto &[code, airport]: airportsByCode) {
         countries.insert(airport.getCountry());
     }
     return countries;
 }
 unordered_map<string,CompanhiaAerea> GestaoAeroporto::getCompanhias() {
     return companhias;
+}
+
+unordered_map<string, unordered_map<string, unordered_map<string, Aeroporto>>> GestaoAeroporto::getAirportsToCountryMap(){
+    return airportsByCountry;
+};
+
+unordered_map<string,Aeroporto> GestaoAeroporto::getAirportsToCodeMap(){
+    return airportsByCode;
 }

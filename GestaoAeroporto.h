@@ -28,17 +28,21 @@ public:
     void addAirport(const Aeroporto& a);
     int getAirportID(const string& airportTag);
     Voo getGraph();
-    vector<Aeroporto> GetAirportsInCountry(const std::string& country) const;
-    vector<Aeroporto> GetAirportsInCity(const std::string& country, const std::string& city) const;
-    const Aeroporto& GetAirport(const std::string& country, const std::string& city, const std::string& name) const;
-    vector<Aeroporto> GetAirportsbyDistanceToPoint(double maxdistance, double x , double y);
+    vector<Aeroporto> getAirportsInCountry(const std::string& country) const;
+    vector<Aeroporto> getAirportsInCity(const std::string& country, const std::string& city) const;
+    const Aeroporto& getAirport(const std::string& country, const std::string& city, const std::string& name) const;
+    vector<Aeroporto> getAirportsbyDistanceToPoint(double maxdistance, double x , double y);
     set<string> getCountries() const;
+    Aeroporto getAirportByCode(const string& code);
+    unordered_map<string, unordered_map<string, unordered_map<string, Aeroporto>>> getAirportsToCountryMap();
     unordered_map<string,CompanhiaAerea> getCompanhias();
+    unordered_map<string,Aeroporto> getAirportsToCodeMap();
+
 private:
-    unordered_map<string, unordered_map<string, unordered_map<string, Aeroporto>>> airports_by_country_;
+    unordered_map<string, unordered_map<string, unordered_map<string, Aeroporto>>> airportsByCountry;
     unordered_map<string, int> airportIDs;
     unordered_map<string, CompanhiaAerea> companhias;
-    unordered_map<string, Aeroporto> airportsbycode;
+    unordered_map<string, Aeroporto> airportsByCode;
     Voo flightGraph = Voo(true);
 };
 

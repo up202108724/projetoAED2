@@ -55,6 +55,7 @@ public:
     int countSCCs();
     void dfs_scc2(int v, stack<int> &st, list<list<int>> &sccs, int &currCount);
     list<list<int>> listSCCs();
+    Aeroporto getAirportFromID(int id);
 };
 
 
