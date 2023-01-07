@@ -22,3 +22,7 @@ string CompanhiaAerea::getSigla() {
 bool CompanhiaAerea::operator==(CompanhiaAerea ca){
     return ca.getSigla()==sigla_;
 }
+
+void CompanhiaAerea::addFlight(const string& air1, const string& air2){
+    flights.insert({air1, air2});
+}

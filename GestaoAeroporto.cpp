@@ -82,6 +82,7 @@ void GestaoAeroporto::readFlights() {
             i++;
         }
         i=0;
+        companhias.at(Airline).addFlight(Source,Target);
         flightGraph.addEdge(airportIDs.at(Source), airportIDs.at(Target), Airline);
     }
 }

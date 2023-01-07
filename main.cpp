@@ -67,18 +67,21 @@ void getAllDestinations(string originAirport, GestaoAeroporto manager){
         cout << endl;
     }
 }
-void option2(const string& country, const GestaoAeroporto& manager){
+void getAirportsByCityInCountry(const string& country, const GestaoAeroporto& manager){
     set<string> cities;
     for (Aeroporto a : manager.getAirportsInCountry(country)) {
         cities.insert(a.getCity());
     }
     for (string city : cities) {
         cout << city << endl;
+        for (Aeroporto airport : manager.getAirportsInCity(country,city)){
+            cout << "\t" << airport.getCode() << ", " << airport.getName() << endl;
+        }
     }
 }
 void OptionY(GestaoAeroporto manager , string Code){
     unordered_set<string> newset=manager.getGraph().getPaisesfromAeroporto(manager.getAirportID("OPO"));
-    for( string a : newset){
+    for(string a : newset){
         cout << a<< endl;
     }
 
@@ -229,7 +232,7 @@ int main() {
             string country;
             country = inputValidString("Escolha um país: ", manager.getAirportsToCountryMap());
             if (country=="0") break;
-            option2(manager, country);
+            getAirportsByCityInCountry(country, manager);
             cout << endl << "Insira 0 para sair do programa ou 1 para voltar ao menu principal: ";
             quit = inputInt(1);
             if (quit==0) break;

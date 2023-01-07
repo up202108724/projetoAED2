@@ -7,12 +7,18 @@
 
 #include <unordered_set>
 #include <string>
+#include <unordered_map>
+#include <vector>
+#include "Aeroporto.h"
+
 using namespace std;
+
 class CompanhiaAerea {
 public:
-    CompanhiaAerea( string sigla, string nome, string callsign, string pais);
+    CompanhiaAerea(string sigla, string nome, string callsign, string pais);
     string getSigla();
     string getNome();
+    void addFlight(const string& air1, const string& air2);
     bool operator==(CompanhiaAerea ca);
 
 private:
@@ -20,6 +26,7 @@ private:
     string nome_;
     string callsign_;
     string pais_;
+    unordered_multimap<string, string> flights;
 };
 
 
