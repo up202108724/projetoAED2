@@ -246,7 +246,7 @@ list<list<int>> Voo::listSCCs() {
     list<list<int>> sccs;
     stack<int> st;
     int currCount = 0;
-    int count=1;
+    int count=0;
     for (int i = 0; i < nodes.size(); i ++) {
         nodes[i].visited = false;
         nodes[i].in_stack = false;
@@ -334,7 +334,7 @@ int Voo::getDiameter(){
 int Voo::getNumFlightsTotal() {
     int count =0;
     for ( int i=0; i < nodes.size(); i++  ){
-        count+=nodes.at(i).destinos.size();
+        count+=nodes[i].destinos.size();
     }
-    return nodes.size();
+    return count;
 }
