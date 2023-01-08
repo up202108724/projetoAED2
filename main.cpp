@@ -389,7 +389,7 @@ int main() {
             }
             if (option==2){
                 cout << "---------------------------------------------------------" << endl;
-                cout << "1 - Ver a lista de aeroportos de um país" << endl;
+                cout << "1 - Número total de aeroportos do país e os respetivos voos" << endl;
                 cout << "2 - Ver a lista de companhias pertencentes ao país" << endl;
                 cout << "3 - Top 10 países com mais aeroportos" << endl;
                 cout << "---------------------------------------------------------" << endl;
@@ -398,10 +398,17 @@ int main() {
                 if (option2==0) break;
                 if (option2==1){
                     string pais= inputValidString("Insira um país: ", manager.getAirportsToCountryMap());
-                    cout << "Lista de aeroportos no país :" << endl;
-                    for (Aeroporto i : manager.getAirportsInCountry(pais)){
-                        cout << i.getName() << endl;
+                    vector<Aeroporto> airports = manager.getAirportsInCountry(pais);
+                    int total_flights = 0;
+                    int global_flights = 0;
+                    for (Aeroporto a : airports){
+                        total_flights += manager.getGraph().getAllDestinations(manager.getAirportID(a.getCode())).size();
                     }
+                    for (auto companhia: manager.getCompanhias()){
+                        global_flights+=companhia.second.getFlights().size();
+                    }
+                    cout << "O país " << pais << " tem " << airports.size() << " aeroportos (" << airports.size()*100.0/manager.getAirportsToCodeMap().size() << "% do total) originando "
+                    << total_flights << " voos (" << total_flights*100.0/global_flights << "% do total).\n";
                 }
                 if (option2==2){
                     string pais= inputValidString("Insira um país: ", manager.getAirportsToCountryMap());
