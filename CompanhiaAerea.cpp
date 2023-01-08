@@ -26,3 +26,7 @@ bool CompanhiaAerea::operator==(CompanhiaAerea ca){
 void CompanhiaAerea::addFlight(const string& air1, const string& air2){
     flights.insert({air1, air2});
 }
+
+unordered_multimap<string,string> CompanhiaAerea::getFlights(){
+    return flights;
+}

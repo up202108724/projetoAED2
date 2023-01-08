@@ -9,7 +9,6 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
-#include "Aeroporto.h"
 
 using namespace std;
 
@@ -19,6 +18,7 @@ public:
     string getSigla();
     string getNome();
     void addFlight(const string& air1, const string& air2);
+    unordered_multimap<string,string> getFlights();
     bool operator==(CompanhiaAerea ca);
 
 private:

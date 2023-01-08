@@ -1,6 +1,7 @@
 #include <iostream>
 #include <limits>
 #include <climits>
+#include <algorithm>
 #include "GestaoAeroporto.h"
 
 int inputInt(int limit){
@@ -137,6 +138,10 @@ void nFlightsAirports(GestaoAeroporto manager, const string& Code, int arbitrary
     }
 }
 
+bool top10Order(const pair<string,int>& one, const pair<string,int>& two){
+    return one.second>two.second;
+}
+
 int main() {
     GestaoAeroporto manager= GestaoAeroporto();
     int option;
@@ -150,7 +155,8 @@ int main() {
         cout << "2 - Ver todas as cidades de um país com aeroporto" << endl;
         cout << "3 - Ver todos os aeroportos de uma cidade" << endl;
         cout << "4 - Ver informações sobre um aeroporto" << endl;
-        cout << "8 - Características da rede" << endl;
+        cout << "5 - Estatísticas" << endl;
+        cout << "8 - Características da rede (grafo)" << endl;
         cout << "---------------------------------------------------------" << endl;
         cout << "Selecione uma opção: ";
         selection = inputInt(9);
@@ -296,56 +302,119 @@ int main() {
             cout << "2 - Companhias aéreas em operação" << endl;
             cout << "3 - Países de destino" << endl;
             cout << "4 - Aeroportos, países ou cidades alcançáveis até N voos" << endl;
+            cout << "5 - Número máximo de aeroportos percorrível (diâmetro a partir deste ponto)" << endl;
             cout << "---------------------------------------------------------" << endl;
             cout << "Selecione uma opção: ";
-            option = inputInt(4);
+            option = inputInt(5);
             string airportCode;
             if (option==0) break;
-            if (option==1) {
-                airportCode = inputValidString("Insira um aeroporto: ", manager.getAirportsToCodeMap());
-                if (airportCode=="0") break;
-                getAllDestinations(airportCode, manager);
-            }
-            if (option==2){
-                airportCode = inputValidString("Insira um aeroporto: ", manager.getAirportsToCodeMap());
-                if (airportCode=="0") break;
-                getAllAirlines(airportCode, manager);
-            }
-            if (option==3){
-                airportCode = inputValidString("Insira um aeroporto: ", manager.getAirportsToCodeMap());
-                if (airportCode=="0") break;
-                getAllCountryDestinations(airportCode, manager);
-            }
+            airportCode = inputValidString("Insira um aeroporto: ", manager.getAirportsToCodeMap());
+            if (airportCode=="0") break;
+            if (option==1) getAllDestinations(airportCode, manager);
+            if (option==2) getAllAirlines(airportCode, manager);
+            if (option==3) getAllCountryDestinations(airportCode, manager);
             if (option==4){
                 cout << "---------------------------------------------------------" << endl;
                 cout << "1 - Aeroportos alcançáveis até n voos" << endl;
-                cout << "2 - Cidades alcançáveis até n voos"  << endl;
-                cout << "3 - Países alcançáveis até n voos"  << endl;
+                cout << "2 - Países alcançáveis até n voos"  << endl;
+                cout << "3 - Cidades alcançáveis até n voos"  << endl;
                 cout << "---------------------------------------------------------" << endl;
                 cout << "Selecione uma opção: ";
                 int option2 = inputInt(3);
                 int arbitrary;
                 if (option2==0) break;
+                cout<< "Escolha um número de voos: ";
+                arbitrary=inputInt(INT_MAX);
                 if (option2==1){
-                    airportCode = inputValidString("Insira um aeroporto: ", manager.getAirportsToCodeMap());
-                    cout<< "Escolha um número de voos: ";
-                    arbitrary=inputInt(INT_MAX);
                     cout << "Com " << arbitrary << " voos , é possível alcançar os seguintes aeroportos: " << endl;
                     nFlightsAirports(manager,airportCode,arbitrary);
                 }
                 if(option2==2){
-                    airportCode = inputValidString("Insira um aeroporto: ", manager.getAirportsToCodeMap());
-                    cout<< "Escolha um número de voos: ";
-                    arbitrary= inputInt(INT_MAX);
                     cout << "Com " << arbitrary << " voos , é possível alcançar os seguintes países: " << endl;
                     nFlightsCountries(manager, airportCode, arbitrary);
                 }
                 if(option2==3){
-                    airportCode = inputValidString("Insira um aeroporto: ", manager.getAirportsToCodeMap());
-                    cout<< "Escolha um número de voos: ";
-                    arbitrary= inputInt(INT_MAX);
                     cout << "Com " << arbitrary << " voos , é possível alcançar as seguintes cidades: " << endl;
                     nFlightsCities(manager, airportCode, arbitrary);
+                }
+            }
+            if (option==5){
+                cout << endl << "O diâmetro a partir deste aeroporto é " << manager.getGraph().bfs_nvoos(manager.getAirportID(airportCode)) << ".\n";
+            }
+            cout << endl << "Insira 0 para sair do programa ou 1 para voltar ao menu principal: ";
+            quit = inputInt(1);
+            if (quit==0) break;
+        }
+        if (selection==5){
+            cout << "---------------------------------------------------------" << endl;
+            cout << "1 - Estatísticas globais" << endl;
+            cout << "2 - Estatísticas sobre países" << endl;
+            cout << "3 - Estatísticas sobre companhias aéreas" << endl;
+            cout << "---------------------------------------------------------" << endl;
+            cout << "Selecione uma opção: ";
+            option=inputInt(3);
+            if (option==0) break;
+            if (option==1){
+                cout << "---------------------------------------------------------" << endl;
+                cout << "1 - Número total de aeroportos e países" << endl;
+                cout << "2 - Número total de voos" << endl;
+                cout << "3 - Número total de companhias aéreas" << endl;
+                cout << "4 - Top 10 aeroportos com mais voos" << endl;
+                cout << "---------------------------------------------------------" << endl;
+                cout << "Selecione uma opção: ";
+                int option2=inputInt(4);
+                if (option2==0) break;
+
+                if (option2==4){
+                    vector<pair<string,int>> results;
+                    pair<string, int> result;
+                    for (const auto& airport : manager.getAirportsToCodeMap()) {
+                        result = {airport.first, manager.getGraph().getAllDestinations(
+                                manager.getAirportID(airport.first)).size()};
+                        results.push_back(result);
+                    }
+                    sort(results.begin(),results.end(), top10Order);
+                    cout << endl;
+                    for (int k=0; k<=9; k++){
+                        cout << k+1 << " - " << results.at(k).first << ", " << manager.getAirportsToCodeMap().at(results.at(k).first).getName() << " - " << results.at(k).second << endl;
+                    }
+                }
+            }
+            if (option==2){
+
+            }
+            if (option==3){
+                cout << "---------------------------------------------------------" << endl;
+                cout << "1 - Aeroportos e países em que a companhia está presente" << endl;
+                cout << "2 - Estatísticas sobre os voos da companhia" << endl;
+                cout << "---------------------------------------------------------" << endl;
+                cout << "Selecione uma opção: ";
+                int option2=inputInt(3);
+                if (option2==0) break;
+                if (option2==1){
+                    string companhia = inputValidString("Insira a sigla de uma companhia aérea: ", manager.getCompanhias());
+                    if (companhia=="0") break;
+                    unordered_set<string> airports = manager.getAirportsInOperationCompanhia(companhia);
+                    unordered_set<string> countries = manager.getCountriesInOperationCompanhia(companhia);
+                    cout << endl;
+                    cout << "Aeroportos: " << endl;
+                    for (const string& airport: airports){
+                        cout << "\t" << airport << ", " << manager.getAirportsToCodeMap().at(airport).getName() << endl;
+                    }
+                    cout << "Países: " << endl;
+                    for (const string& country : countries){
+                        cout << "\t" << country << endl;
+                    }
+                    cout << endl;
+                }
+                if (option2==2){
+                    string companhia = inputValidString("Insira a sigla de uma companhia aérea: ", manager.getCompanhias());
+                    if (companhia=="0") break;
+                    unordered_set<string> airports = manager.getAirportsInOperationCompanhia(companhia);
+                    unordered_set<string> countries = manager.getCountriesInOperationCompanhia(companhia);
+                    cout << "A companhia aérea " << companhia << " encontra-se em operação em " << airports.size() << " (" <<
+                    airports.size()*100.0/manager.getAirportsToCodeMap().size() << "% de todos os aeroportos) e em " << countries.size() << " países (" <<
+                    countries.size()*100.0/manager.getAirportsToCountryMap().size() << "% de todos os países), fazendo um total de " << manager.getNumFlights(companhia) << " voos."<< endl;
                 }
             }
             cout << endl << "Insira 0 para sair do programa ou 1 para voltar ao menu principal: ";

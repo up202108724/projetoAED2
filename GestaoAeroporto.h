@@ -15,6 +15,7 @@
 #include <set>
 #include <unordered_set>
 #include <unordered_map>
+#include <string>
 #include "Aeroporto.h"
 #include "Voo.h"
 
@@ -35,6 +36,9 @@ public:
     unordered_map<string, unordered_map<string, unordered_map<string, Aeroporto>>> getAirportsToCountryMap();
     unordered_map<string,CompanhiaAerea> getCompanhias();
     unordered_map<string,Aeroporto> getAirportsToCodeMap();
+    unordered_set<string> getCountriesInOperationCompanhia(const string& companhia);
+    unordered_set<string> getAirportsInOperationCompanhia(const string& companhia);
+    int getNumFlights(const string& companhia);
 
 private:
     unordered_map<string, unordered_map<string, unordered_map<string, Aeroporto>>> airportsByCountry;

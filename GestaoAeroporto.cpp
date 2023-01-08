@@ -145,3 +145,25 @@ unordered_map<string, unordered_map<string, unordered_map<string, Aeroporto>>> G
 unordered_map<string,Aeroporto> GestaoAeroporto::getAirportsToCodeMap(){
     return airportsByCode;
 }
+
+unordered_set<string> GestaoAeroporto::getCountriesInOperationCompanhia(const string& companhia){
+    unordered_set<string> result;
+    for(auto& flight: companhias.at(companhia).getFlights()){
+        result.insert(airportsByCode.at(flight.first).getCountry());
+        result.insert(airportsByCode.at(flight.second).getCountry());
+    }
+    return result;
+}
+
+unordered_set<string> GestaoAeroporto::getAirportsInOperationCompanhia(const string& companhia){
+    unordered_set<string> result;
+    for(auto & flight : companhias.at(companhia).getFlights()){
+        result.insert(flight.first);
+        result.insert(flight.second);
+    }
+    return result;
+}
+
+int GestaoAeroporto::getNumFlights(const string& companhia){
+    return companhias.at(companhia).getFlights().size();
+}
