@@ -141,7 +141,6 @@ void nFlightsAirports(GestaoAeroporto manager, const string& Code, int arbitrary
 bool top10Order(const pair<string,int>& one, const pair<string,int>& two){
     return one.second>two.second;
 }
-
 int main() {
     GestaoAeroporto manager= GestaoAeroporto();
     int option;
@@ -364,7 +363,15 @@ int main() {
                 cout << "Selecione uma opção: ";
                 int option2=inputInt(4);
                 if (option2==0) break;
-
+                if (option2==1){
+                    cout << "A rede abrange " << manager.getcountries().size() << " países e cerca de " ;
+                }
+                if (option2==2){
+                    cout << "Em toda a rede existem " << manager.getGraph().getNumFlightsTotal() << " voos ";
+                }
+                if (option2==3){
+                    cout << "Sobre a rede operam " << manager.getCompanhias().size() << " companhias " ;
+                }
                 if (option2==4){
                     vector<pair<string,int>> results;
                     pair<string, int> result;
@@ -381,7 +388,52 @@ int main() {
                 }
             }
             if (option==2){
+                cout << "---------------------------------------------------------" << endl;
+                cout << "1 - Ver a lista de aeroportos de um país" << endl;
+                cout << "2 - Ver a lista de companhias pertencentes ao país" << endl;
+                cout << "3 - Top 10 países com mais aeroportos" << endl;
+                cout << "---------------------------------------------------------" << endl;
+                cout << "Selecione uma opção: ";
+                int option2=inputInt(3);
+                if (option2==0) break;
+                if (option2==1){
+                    string pais= inputValidString("Insira um país: ", manager.getAirportsToCountryMap());
+                    cout << "Lista de aeroportos no país :" << endl;
+                    for (Aeroporto i : manager.getAirportsInCountry(pais)){
+                        cout << i.getName() << endl;
+                    }
+                }
+                if (option2==2){
+                    string pais= inputValidString("Insira um país: ", manager.getAirportsToCountryMap());
+                    unordered_set<string> companhias_nomes;
+                    for (auto companhia: manager.getCompanhias()){
+                        if (companhia.second.getPais()==pais){
+                            companhias_nomes.insert(companhia.second.getNome());
+                        }
+                    }
+                    cout << "Lista de companhias aéreas de "<< pais <<  ":" << endl;
+                    for(auto i :companhias_nomes){
+                        cout << i << endl;
+                    }
+                }
 
+                if(option2==3){
+                    vector<pair<string,int>> voosaeroporto;
+                    unordered_set<string> countriesanalyzed;
+
+                    for(auto a : manager.getAirportsToCountryMap()){
+                        if (countriesanalyzed.find(a.first)!=countriesanalyzed.end()){
+                            continue;
+                        }
+                        voosaeroporto.push_back({a.first, manager.getAirportsInCountry(a.first).size()});
+                        countriesanalyzed.insert(a.first);
+                    }
+                    sort(voosaeroporto.begin(), voosaeroporto.end(), top10Order);
+                    for (int i=0; i<10 ; i++){
+                        cout << i+1 << "ºlugar:  " << voosaeroporto[i].first << " com " << voosaeroporto[i].second << " Aeroportos " << endl;
+                    }
+
+                }
             }
             if (option==3){
                 cout << "---------------------------------------------------------" << endl;

@@ -331,3 +331,10 @@ int Voo::getDiameter(){
     }
     return diameter;
 }
+int Voo::getNumFlightsTotal() {
+    int count =0;
+    for ( int i=0; i < nodes.size(); i++  ){
+        count+=nodes.at(i).destinos.size();
+    }
+    return nodes.size();
+}

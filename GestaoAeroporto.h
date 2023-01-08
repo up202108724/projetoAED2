@@ -39,6 +39,7 @@ public:
     unordered_set<string> getCountriesInOperationCompanhia(const string& companhia);
     unordered_set<string> getAirportsInOperationCompanhia(const string& companhia);
     int getNumFlights(const string& companhia);
+    unordered_set<string> getcountries();
 
 private:
     unordered_map<string, unordered_map<string, unordered_map<string, Aeroporto>>> airportsByCountry;
@@ -46,6 +47,7 @@ private:
     unordered_map<string, CompanhiaAerea> companhias;
     unordered_map<string, Aeroporto> airportsByCode;
     Voo flightGraph = Voo(true);
+    unordered_set<string> countries;
 };
 
 

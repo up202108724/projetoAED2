@@ -56,6 +56,7 @@ void GestaoAeroporto::readAirports()  {
         float latitude= stof(Latitude);
         float longitude= stof(Longitude);
         Aeroporto novo_aeroporto= Aeroporto(Code,Name,City,Country,latitude,longitude);
+        countries.insert(Country);
         addAirport(novo_aeroporto);
         airportsByCode.insert({novo_aeroporto.getCode(),novo_aeroporto});
         i=0;
@@ -166,4 +167,7 @@ unordered_set<string> GestaoAeroporto::getAirportsInOperationCompanhia(const str
 
 int GestaoAeroporto::getNumFlights(const string& companhia){
     return companhias.at(companhia).getFlights().size();
+}
+unordered_set<string> GestaoAeroporto::getcountries() {
+    return countries;
 }

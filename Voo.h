@@ -53,6 +53,7 @@ public:
     unordered_set<string> nFlightsCities(int v, int arbitrary);
     unordered_set<string> nFlightsCountries(int v, int arbitrary);
     unordered_set<string> nFlightsAirports(int v, int arbitrary);
+    int getNumFlightsTotal();
 };
 
 

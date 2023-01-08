@@ -18,7 +18,9 @@ string CompanhiaAerea::getNome() {
 string CompanhiaAerea::getSigla() {
     return sigla_;
 }
-
+string CompanhiaAerea::getPais(){
+    return pais_;
+}
 bool CompanhiaAerea::operator==(CompanhiaAerea ca){
     return ca.getSigla()==sigla_;
 }
