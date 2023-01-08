@@ -58,7 +58,6 @@ void GestaoAeroporto::readAirports()  {
         Aeroporto novo_aeroporto= Aeroporto(Code,Name,City,Country,latitude,longitude);
         countries.insert(Country);
         addAirport(novo_aeroporto);
-        airportsByCode.insert({novo_aeroporto.getCode(),novo_aeroporto});
         i=0;
     }
 
@@ -91,6 +90,7 @@ void GestaoAeroporto::readFlights() {
 void GestaoAeroporto::addAirport(const Aeroporto& a) {
     airportsByCountry[a.getCountry()][a.getCity()].insert({a.getName(), a});
     airportIDs.insert({a.getCode(),airportIDs.size()});
+    airportsByCode.insert({a.getCode(),a});
     if (airportIDs.at(a.getCode())==airportIDs.size()-1) flightGraph.addNode(a);
     else cout << "O aeroporto " << a.getCode() << " já se encontra na base de dados." << endl;
 }
