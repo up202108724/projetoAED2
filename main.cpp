@@ -289,7 +289,7 @@ int main() {
             if (city=="0") break;
             vector<Aeroporto> airports = manager.getAirportsInCity(country, city);
             for (const Aeroporto& airport : airports){
-                cout << "\t" << airport.getCode() << ", " << airport.getName();
+                cout << "\t" << airport.getCode() << ", " << airport.getName() << endl;
             }
             cout << endl << "Insira 0 para sair do programa ou 1 para voltar ao menu principal: ";
             quit = inputInt(1);
@@ -364,13 +364,13 @@ int main() {
                 int option2=inputInt(4);
                 if (option2==0) break;
                 if (option2==1){
-                    cout << "A rede abrange " << manager.getcountries().size() << " países e cerca de " ;
+                    cout << "A rede abrange " << manager.getcountries().size() << " países e " << manager.getAirportsToCodeMap().size() << " aeroportos.";
                 }
                 if (option2==2){
-                    cout << "Em toda a rede existem " << manager.getGraph().getNumFlightsTotal() << " voos ";
+                    cout << "Em toda a rede existem " << manager.getGraph().getNumFlightsTotal() << " voos.";
                 }
                 if (option2==3){
-                    cout << "Sobre a rede operam " << manager.getCompanhias().size() << " companhias " ;
+                    cout << "Sobre a rede operam " << manager.getCompanhias().size() << " companhias." ;
                 }
                 if (option2==4){
                     vector<pair<string,int>> results;
@@ -450,11 +450,11 @@ int main() {
                 cout << "Selecione uma opção: ";
                 int option2=inputInt(3);
                 if (option2==0) break;
+                string companhia = inputValidString("Insira a sigla de uma companhia aérea: ", manager.getCompanhias());
+                if (companhia=="0") break;
+                unordered_set<string> airports = manager.getAirportsInOperationCompanhia(companhia);
+                unordered_set<string> countries = manager.getCountriesInOperationCompanhia(companhia);
                 if (option2==1){
-                    string companhia = inputValidString("Insira a sigla de uma companhia aérea: ", manager.getCompanhias());
-                    if (companhia=="0") break;
-                    unordered_set<string> airports = manager.getAirportsInOperationCompanhia(companhia);
-                    unordered_set<string> countries = manager.getCountriesInOperationCompanhia(companhia);
                     cout << endl;
                     cout << "Aeroportos: " << endl;
                     for (const string& airport: airports){
@@ -467,11 +467,7 @@ int main() {
                     cout << endl;
                 }
                 if (option2==2){
-                    string companhia = inputValidString("Insira a sigla de uma companhia aérea: ", manager.getCompanhias());
-                    if (companhia=="0") break;
-                    unordered_set<string> airports = manager.getAirportsInOperationCompanhia(companhia);
-                    unordered_set<string> countries = manager.getCountriesInOperationCompanhia(companhia);
-                    cout << "A companhia aérea " << companhia << " encontra-se em operação em " << airports.size() << " (" <<
+                    cout << "A companhia aérea " << companhia << ", " << manager.getCompanhias().at(companhia).getNome() << " encontra-se em operação em " << airports.size() << " (" <<
                     airports.size()*100.0/manager.getAirportsToCodeMap().size() << "% de todos os aeroportos) e em " << countries.size() << " países (" <<
                     countries.size()*100.0/manager.getAirportsToCountryMap().size() << "% de todos os países), fazendo um total de " << manager.getNumFlights(companhia) << " voos."<< endl;
                 }
